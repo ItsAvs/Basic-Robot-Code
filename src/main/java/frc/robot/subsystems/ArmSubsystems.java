@@ -25,6 +25,22 @@ public class ArmSubsystems extends SubsystemBase {
         this.clawMotor1.set(speed1);
         this.clawMotor2.set(speed2);
     }
+
+    public void stopAllMotors(){
+        this.motor1Speed.set(0);
+        this.motor2Speed.set(0);
+    }
+
+    public void TestArmCommand(){
+        int ticks = 1;
+        while (ticks < 601){
+            this.motor1Speed.set(Math.sin(ticks));
+            this.motor2Speed.set(Math.cos(ticks));
+            ticks += 1;
+        }
+        stopAllMotors()
+
+    }
 	public CommandBase exampleMethodCommand() {
 		// Inline construction of command goes here.
 		// Subsystem::RunOnce implicitly requires `this` subsystem.
