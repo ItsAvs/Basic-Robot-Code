@@ -6,11 +6,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PortConstants;
 
 public class ArmSubsystems extends SubsystemBase {
-	private final CANSparkMax clawMotor1;
-    private final CANSparkMax clawMotor2;
+	private final CANSparkMax armMotor1;
+    private final CANSparkMax armMotor2;
     public ArmSubsystems() {
-        this.clawMotor1 = new CANSparkMax(PortConstants.PORT_1);
-        this.clawMotor2 = new CANSparkMax(PortConstants.PORT_2);
+        this.armMotor1 = new CANSparkMax(PortConstants.PORT_1, MotorType.kBrushless);
+        this.armMotor2 = new CANSparkMax(PortConstants.PORT_2, MotorType.kBrushless);
     }
 
     public void motor1Speed(double speed){
@@ -31,30 +31,20 @@ public class ArmSubsystems extends SubsystemBase {
         this.motor2Speed.set(0);
     }
 
-    public void TestArmCommand(){
-        int ticks = 1;
+    public CommandBase TestArmCommand(){
+        int ticks;
         while (ticks < 601){
             this.motor1Speed.set(Math.sin(ticks));
             this.motor2Speed.set(Math.cos(ticks));
             ticks += 1;
         }
         stopAllMotors()
-
     }
-	public CommandBase exampleMethodCommand() {
-		// Inline construction of command goes here.
-		// Subsystem::RunOnce implicitly requires `this` subsystem.
-		return runOnce(
-				() -> {
-					/* one-time action goes here */
-				});
-	}
-
-	
-	public boolean exampleCondition() {
-		// Query some boolean state, such as a digital sensor.
-		return false;
-	}
+	@Override
+    public void intitilize(){
+        ticks = 0;
+        System.out.println("begin arm command (hw2)")
+    }
 
 	@Override
 	public void periodic() {
