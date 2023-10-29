@@ -40,8 +40,9 @@ public class ArmSubsystems extends SubsystemBase {
         }
         stopAllMotors()
     }
-	@Override
-    public void intitilize(){
+	
+    @Override
+    public void intitilize() {
         ticks = 0;
         System.out.println("begin arm command (hw2)")
     }
