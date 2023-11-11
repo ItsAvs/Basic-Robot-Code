@@ -6,9 +6,12 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.TestArmCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -20,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
 	// The robot's subsystems and commands are defined here...
-	private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+	private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
 
 	// Replace with CommandPS4Controller or CommandJoystick if needed
 	private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
@@ -39,15 +42,15 @@ public class RobotContainer {
 	 * predicate, or via the named factories in {@link edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
 	 * {@link CommandXboxControllerXbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4ControllerPS4} controllers or
 	 * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flightjoysticks}.
+	 * 2. Create a new local variable of type Command, and make it first set both arm motor speeds to 0 
+	 * (hint: it runs once), then immediately afterwards runs a new ArmTestCommand.
 	 */
 	private void configureBindings() {
-		// Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-		new Trigger(m_exampleSubsystem::exampleCondition)
-				.onTrue(new ExampleCommand(m_exampleSubsystem));
+		Command resetCommand = Commands.runOnce(() -> {
+			m_armSubsystem.stopAllMotors();}, m_armSubsystem).andThen(
+				new TestArmCommand(m_armSubsystem));
+		resetCommand.schedule();
 
-		// Schedule `exampleMethodCommand` when the Xbox controller's B button is
-		// pressed, cancelling on release.
-		m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 	}
 
 	/**
@@ -55,10 +58,11 @@ public class RobotContainer {
 	 *
 	 * @return the command to run in autonomous
 	 */
-	public Command getAutonomousCommand() {
+	//public Command getAutonomousCommand() {
 		// An example command will be run in autonomous
-		return Autos.exampleAuto(m_exampleSubsystem);
-	}
+		//return Autos.exampleAuto(Subsystem);
+
+	//}
 
 	public void onAutonInit() {
 
