@@ -14,6 +14,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.networktables.NTSendable;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.subsystems.staticsubsystems.RobotGyro;
@@ -33,6 +34,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     private final DigitalInput pivot1LimitSwitch;
     private final DigitalInput pivot2LimitSwitch;
+
 
     
     public ArmSubsystem()  {
@@ -91,7 +93,11 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void printTableEntrys(){
-        //no idea where the table entrys are??
+        //java has boolean values lowercase :O
+        boolean checkNetworkTable = NetworkTablesUtil.getEntry("table1", "entry2").getBoolean(false);
+        if (checkNetworkTable){
+            System.out.println("Network Table Value is True.");
+        }
     }
 
 	@Override
