@@ -20,7 +20,14 @@ public final class Constants {
 	public static class PortConstants {
 		public static final int ARM_MOTOR_PORT_1 = 1;
 		public static final int ARM_MOTOR_PORT_2 = 2;
+
+		public static final int PIVOT_1_LIMIT_PORT = 1;
+		public static final int PIVOT_2_LIMIT_PORT = 0;
 	}
 
+	public static class ArmConstants{
+		public static final int ENCODER_1_VALUE = 20;
+		public static final int ENCODER_2_VALUE = 30;
+	}
 
 }
